@@ -16,6 +16,6 @@ class TodoCubit extends Cubit<TodoViewState> {
     } else {
       newList.add(todoDto);
     }
-    emit(state.copyWith(listTodo: newList, needRefresh: true));
+    emit(state.copyWith(listTodo: newList));
   }
 }

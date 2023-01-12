@@ -1,6 +1,7 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample_amarta/cubit/todo_cubit.dart';
 import 'package:sample_amarta/cubit/todo_view_state.dart';
 import 'package:sample_amarta/domain/dto/todo_dto.dart';
@@ -67,10 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void _updateTodo(int index) {
     var oldTodo = _listTodo[index];
     oldTodo.isDone = true;
-    setState(() {
-      context.read<TodoCubit>().insertOrUpdateTodo(oldTodo);
-      _listTodo[index] = oldTodo;
-    });
+    context.read<TodoCubit>().insertOrUpdateTodo(oldTodo);
+    _listTodo[index] = oldTodo;
+    setState(() {});
   }
 
   void _displayTextInputDialog() async {
@@ -106,12 +106,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(color: Colors.blue),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
-                  if (todoValue.isEmpty) {}
-                  if (_listTodo
+                  if (todoValue.isEmpty) {
+                    _showToastMessage("Todo name is empty");
+                  } else if (_listTodo
                       .where((element) => element.name == todoValue)
                       .isNotEmpty) {
+                    _showToastMessage("Todo $todoValue is Avilable");
                   } else {
+                    Navigator.pop(context);
                     _addMoreTodo(todoValue);
                     _textFieldController.text = "";
                   }
@@ -120,6 +122,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           );
         });
+  }
+
+  void _showToastMessage(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   @override

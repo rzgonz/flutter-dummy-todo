@@ -1,18 +1,20 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:sample_amarta/domain/dto/todo_dto.dart';
 
 class TodoViewState extends Equatable {
   final List<TodoDto> listTodo;
-  final bool needRefresh;
-  const TodoViewState(
-      {this.listTodo = const <TodoDto>[], this.needRefresh = false});
+  const TodoViewState({
+    this.listTodo = const <TodoDto>[],
+  });
 
-  TodoViewState copyWith({List<TodoDto>? listTodo, bool? needRefresh}) {
+  TodoViewState copyWith({
+    List<TodoDto>? listTodo,
+  }) {
     return TodoViewState(
-        listTodo: List.of(listTodo ?? []), needRefresh: needRefresh ?? false);
+      listTodo: List.of(listTodo ?? []),
+    );
   }
 
   @override
-  List<Object> get props => [listTodo, needRefresh];
+  List<Object> get props => [listTodo];
 }
