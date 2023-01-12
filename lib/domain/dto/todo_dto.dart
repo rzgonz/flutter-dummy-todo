@@ -1,5 +1,5 @@
 class TodoDto {
-  int id;
+  int id = 0;
   String name;
   bool isDone;
 
